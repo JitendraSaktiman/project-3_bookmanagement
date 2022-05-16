@@ -54,14 +54,20 @@ const Createuser = async function (req, res) {
             return res.status(400).send({ Status: false, message: " Please enter a valid email, do not use @99acr only gmail/hotmail/yahoo etc" })
         }
 
+        let FinalEmail= body.email
+        let changeEmail= FinalEmail.toLowerCase()
+
+        console.log("okay:    ",FinalEmail)
+        console.log("chalo:    ",changeEmail)
+
          //******------------------- Email and phone unique condition -------------------****** //
 
-        let Checkuniquedata = await usermodel.findOne({ $or: [{ email: body.email }, { phone: body.phone }] })
+        let Checkuniquedata = await usermodel.findOne({ $or: [{ email: changeEmail}, { phone: body.phone }] })
         if (Checkuniquedata) {
             if (Checkuniquedata.phone == body.phone) {
                 return res.status(400).send({ Status: false, message: " This phone has been used already" })
             }
-            if (Checkuniquedata.email === body.email) {
+            if (Checkuniquedata.email === changeEmail) {
                 return res.status(400).send({ Status: false, message: " This email has been used already" })
             }
         }
