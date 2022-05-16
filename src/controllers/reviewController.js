@@ -72,7 +72,15 @@ const CreateReview = async function (req, res) {
         //SELECT PARTICULAR KEY
         let ShowReview = await reviewModel.findOne({ _id: ReviewCreate._id }).select({ _id: 1, bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 }).populate("bookId")
 
-        return res.status(201).send({ Status: true, message: 'Success', data: ShowReview })
+
+        //====================================================================================//
+        let reviewsData = await reviewModel.find({bookId:data,isDeleted:false}).select({ _id: 1, bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 })
+        const { _id, title, excerpt, userId, category, subcategory, deleted, reviews, deletedAt, releasedAt, createdAt, updatedAt } = UpdateCountReview
+        let display ={}
+        display={_id, title, excerpt, userId, category, subcategory, deleted, reviews, deletedAt, releasedAt, createdAt, updatedAt,reviewsData}
+        //======================================================================================//
+
+        return res.status(201).send({ Status: true, message: 'Success', data: display })
 
     } catch (err) {
         return res.status(500).send({ Status: false, message: err.message })
@@ -104,6 +112,7 @@ const ReviewUpdate = async function (req, res) {
         if (!Checkbook) {
             return res.status(400).send({ Status: false, message: "Book does not exist / deleted book " })
         }
+        console.log("hello:   ",Checkbook)
 
         let checkReview = await reviewModel.findOne({ _id: ReviewId, isDeleted: false })
 
@@ -135,7 +144,13 @@ const ReviewUpdate = async function (req, res) {
 
         let UpdateReview = await reviewModel.findOneAndUpdate({ _id: ReviewId, bookId:BookIddata }, { review: body.review, rating: body.rating, reviewedBy: body.reviewedBy }, { new: true }).select({ _id: 1, bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 }).populate("bookId")
         if(UpdateReview){
-            return res.status(200).send({ Status: true, message: 'Success', data: UpdateReview })
+            //====================================================================================//
+        let reviewsData = await reviewModel.find({bookId:BookIddata,isDeleted:false}).select({ _id: 1, bookId: 1, reviewedBy: 1, reviewedAt: 1, rating: 1, review: 1 })
+        const { _id, title, excerpt, userId, category, subcategory, deleted, reviews, deletedAt, releasedAt, createdAt, updatedAt } = Checkbook
+        let display ={}
+        display={_id, title, excerpt, userId, category, subcategory, deleted, reviews, deletedAt, releasedAt, createdAt, updatedAt,reviewsData}
+        //======================================================================================//
+            return res.status(200).send({ Status: true, message: 'Success', data: display })
         }
         else{
             return res.status(404).send({ Status: false, message: "Review document does not exist " }) 
