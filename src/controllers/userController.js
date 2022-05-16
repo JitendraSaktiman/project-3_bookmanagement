@@ -71,7 +71,7 @@ const Createuser = async function (req, res) {
             return res.status(400).send({ Status: false, message: " password is required" })
         }
         if (!Passwordregex.test(body.password)) {
-            return res.status(400).send({ Status: false, message: " Please enter a valid password, minlength 8, maxxlength 15" })
+            return res.status(401).send({ Status: false, message: " Please enter a valid password, minlength 8, maxxlength 15" })
         }
         
         //******------------------- regex validation for street, city && Pincode  -------------------****** //
@@ -93,7 +93,7 @@ const Createuser = async function (req, res) {
         if (body.title === "Mr" || body.title === "Miss" || body.title === "Mrs") {
 
             let userCreate = await usermodel.create(body)
-            return res.status(201).send({ Status: true, message: 'Success', data: userCreate })
+            return res.status(200).send({ Status: true, message: 'Success', data: userCreate })
         }
         return res.status(400).send({ Status: false, message: " Please enter a valid title you can use only anyone from these Mr/Miss/Mrs" })
     }
@@ -125,7 +125,7 @@ const login = async function (req, res) {
         //******------------------- password validation -------------------****** //
 
         if (!body.password) {
-            return res.status(400).send({ Status: false, message: " password is required" })
+            return res.status(401).send({ Status: false, message: " password is required" })
         }
         if (!Passwordregex.test(body.password)) {
             return res.status(400).send({ Status: false, message: " Please enter a valid password, minlength 8, maxxlength 15" })
