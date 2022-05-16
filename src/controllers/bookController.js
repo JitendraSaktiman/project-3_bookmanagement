@@ -74,7 +74,7 @@ const Bookcreate = async function (req, res) {
         //************************************************************************************************************************//
 
         if (body.isDeleted === true) {
-            return res.status(400).send({ Status: true, message: " Sorry  you are not allowed to create a book " })
+            return res.status(400).send({ Status: false, message: " Sorry  you are not allowed to create a book " })
         }
 
         // title validation
@@ -250,7 +250,7 @@ const resultBook = async function (req, res) {
         if (FindBook.isDeleted === true) {
             let resultant = {}
             resultant = { _id, title, excerpt, userId, category, subcategory, deleted, reviews, deletedAt, releasedAt, createdAt, updatedAt, reviewsData, reviewsData }
-            return res.status(200).send({ Status: true, message: 'Success', data: resultant })
+            return res.status(404).send({ Status: false, message: 'This is deleted book' })
         }
 
         //*********------- Getting book data if it is not deleted--------------------------------*********************//
