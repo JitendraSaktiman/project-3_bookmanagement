@@ -237,6 +237,23 @@ const GetBook = async function (req, res) {
 
 const resultBook = async function (req, res) {
     try {
+        let data = req.params.bookId
+
+        if (data.length !== 24) {
+            return res.status(400).send({ Status: false, message: "Bookid is not valid, please enter 24 digit of bookid" })
+        }
+
+        let checkBook = await BookModel.findOne({ _id: data })
+
+        if (!checkBook) {
+            return res.status(404).send({ Status: false, message: "Book does not exist" })
+        }
+
+        let checkuser = await userModel.findOne({ _id: checkBook.userId })
+
+        if (!checkuser) {
+            return res.status(400).send({ Status: false, message: "user id does not exist" })
+        }
 
         let FindBook = await BookModel.findById({ _id: req.params.bookId })
 
@@ -254,10 +271,10 @@ const resultBook = async function (req, res) {
         }
 
         //*********------- Getting book data if it is not deleted--------------------------------*********************//
-        let data = {}
-        data = { _id, title, excerpt, userId, category, subcategory, deleted, reviews, deletedAt: "", releasedAt, createdAt, updatedAt, reviewsData }
+        let dataa = {}
+        dataa = { _id, title, excerpt, userId, category, subcategory, deleted, reviews, deletedAt: "", releasedAt, createdAt, updatedAt, reviewsData }
 
-        return res.status(200).send({ Status: true, message: 'Success', data: data })
+        return res.status(200).send({ Status: true, message: 'Success', data: dataa })
 
     } catch (err) {
         return res.status(500).send({ Status: false, message: err.message })
