@@ -138,7 +138,7 @@ const ReviewUpdate = async function (req, res) {
             return res.status(200).send({ Status: true, message: 'Success', data: UpdateReview })
         }
         else{
-            return res.status(400).send({ Status: false, message: "Review document does not exist " }) 
+            return res.status(404).send({ Status: false, message: "Review document does not exist " }) 
         }
 
     } catch (err) {
@@ -183,7 +183,7 @@ const ReviewDelete = async function (req, res) {
         return res.status(200).send({ Status: true, message: 'Success', data: "You review has been deleted" })
         }
         else{
-            return res.status(400).send({ Status: false, message: "Review document does not exist " }) 
+            return res.status(404).send({ Status: false, message: "Review document does not exist " }) 
         }
         
 

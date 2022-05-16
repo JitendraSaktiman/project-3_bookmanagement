@@ -25,12 +25,12 @@ const Createuser = async function (req, res) {
         if (Object.keys(body).length === 0) {
             return res.status(400).send({ Status: false, message: " Sorry Body can't be empty" })
         }
+
         if (!body.title) {
             return res.status(400).send({ Status: false, message: " Title is required" })
         }
 
         // *************---------------- name validation ----------------------********************* //
-        
         if (!body.name) {
             return res.status(400).send({ Status: false, message: " name is required" })
         }
@@ -38,9 +38,7 @@ const Createuser = async function (req, res) {
             return res.status(400).send({ Status: false, message: " name is not in valid format" })
         }
 
-         // *************---------------- Phoe validation ----------------------********************* //
-        
-
+         // *************---------------- Phoe && Email validation ----------------------********************* //
         
         if (!body.phone) {
             return res.status(400).send({ Status: false, message: " phone is required" })
@@ -67,6 +65,7 @@ const Createuser = async function (req, res) {
                 return res.status(400).send({ Status: false, message: " This email has been used already" })
             }
         }
+        // *****------------- Checking PassWord -----------------------------------*******//
 
         if (!body.password) {
             return res.status(400).send({ Status: false, message: " password is required" })
@@ -88,6 +87,9 @@ const Createuser = async function (req, res) {
                 return res.status(400).send({ Status: false, message: " Please enter a valid pincode of 6 digit" })
             }
         }
+
+        // ******------------------- validating title   -------------------****** //
+
         if (body.title === "Mr" || body.title === "Miss" || body.title === "Mrs") {
 
             let userCreate = await usermodel.create(body)
@@ -100,7 +102,7 @@ const Createuser = async function (req, res) {
     }
 }
 
-//-------------------USER LOGIN----------------------------***
+//--------------------------------------------------USER LOGIN------------------------------------------------***//
 
 const login = async function (req, res) {
 
@@ -143,7 +145,7 @@ const login = async function (req, res) {
             UserId: CheckUser._id,
             batch: "Uranium"
 
-        }, 'FunctionUp Group55', { expiresIn: '30000s' });    // token expiry for 24hrs
+        }, 'FunctionUp Group55', { expiresIn: '86400s' });    // token expiry for 24hrs
 
         res.setHeader("x-api-key", user_token);
         return res.status(201).send({ status: true, data: {token:user_token }});
