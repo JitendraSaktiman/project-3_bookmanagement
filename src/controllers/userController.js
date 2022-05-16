@@ -127,7 +127,8 @@ const login = async function (req, res) {
         if (!EmailRegex.test(body.email)) {
             return res.status(400).send({ Status: false, message: " Please enter a valid email, do not use @99acr only gmail/hotmail/yahoo etc" })
         }
-
+        let FinalEmail= body.email
+        let changeEmail= FinalEmail.toLowerCase()
         //******------------------- password validation -------------------****** //
 
         if (!body.password) {
@@ -140,7 +141,7 @@ const login = async function (req, res) {
         //******------------------- checking User Detail -------------------****** //
     
 
-        let CheckUser = await usermodel.findOne({ email: body.email, password: body.password });
+        let CheckUser = await usermodel.findOne({ email: changeEmail, password: body.password });
 
         if (!CheckUser) {
             return res.status(400).send({ Status: false, message: "username or the password is not correct" });
