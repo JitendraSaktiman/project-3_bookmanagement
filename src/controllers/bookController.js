@@ -175,7 +175,7 @@ const GetBook = async function (req, res) {
 
         if (query.userId && query.category && query.subcategory) {
 
-            let RecordBook = await BookModel.find({ userId: query.userId, category: query.category, isDeleted: false, subcategory: query.subcategory }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).sort({ title: 1 })
+            let RecordBook = await BookModel.find({ userId: query.userId, category: query.category, isDeleted: false, subcategory: query.subcategory }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).collation({locale:"en"}).sort({ title: 1 })
 
             if (RecordBook.length > 0) {
                 return res.status(200).send({ Status: true, message: 'Success', data: RecordBook })
@@ -189,7 +189,7 @@ const GetBook = async function (req, res) {
 
         if (query.userId && query.category || query.subcategory && query.category || query.userId && query.subcategory) {
 
-            let Checkbook = await BookModel.find({ $or: [{ userId: query.userId, category: query.category, isDeleted: false }, { userId: query.userId, subcategory: query.subcategory, isDeleted: false }, { subcategory: query.subcategory, category: query.category, isDeleted: false }] }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).sort({ title: 1 })
+            let Checkbook = await BookModel.find({ $or: [{ userId: query.userId, category: query.category, isDeleted: false }, { userId: query.userId, subcategory: query.subcategory, isDeleted: false }, { subcategory: query.subcategory, category: query.category, isDeleted: false }] }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).collation({locale:"en"}).sort({ title: 1 })
 
             if (Checkbook.length > 0) {
                 return res.status(200).send({ Status: true, message: 'Success', data: Checkbook })
@@ -204,7 +204,7 @@ const GetBook = async function (req, res) {
 
         if (query.userId || query.category || query.subcategory) {
 
-            let BookCheck = await BookModel.find({ $or: [{ userId: query.userId, isDeleted: false }, { subcategory: query.subcategory, isDeleted: false }, { category: query.category, isDeleted: false }] }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).sort({ title: 1 })
+            let BookCheck = await BookModel.find({ $or: [{ userId: query.userId, isDeleted: false }, { subcategory: query.subcategory, isDeleted: false }, { category: query.category, isDeleted: false }] }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).collation({locale:"en"}).sort({ title: 1 })
 
             if (BookCheck.length > 0) {
                 return res.status(200).send({ Status: true, message: 'Success', data: BookCheck })
@@ -217,7 +217,7 @@ const GetBook = async function (req, res) {
 
         //**********************  If query have no combination of userid,category,subcategory ********************** //
 
-        let FindAllBook = await BookModel.find({ isDeleted: false }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).sort({ title: 1 })
+        let FindAllBook = await BookModel.find({ isDeleted: false }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).collation({locale:"en"}).sort({ title: 1 })
         if (FindAllBook.length > 0) {
             return res.status(200).send({ Status: true, message: 'Success', data: FindAllBook })
         }
