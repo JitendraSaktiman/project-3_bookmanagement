@@ -51,7 +51,7 @@ const Createuser = async function (req, res) {
             return res.status(400).send({ Status: false, message: " email is required" })
         }
         if (!EmailRegex.test(body.email)) {
-            return res.status(400).send({ Status: false, message: " Please enter a valid email" })
+            return res.status(400).send({ Status: false, message: " Please enter a valid email, do not use @99acr only gmail/hotmail/yahoo etc" })
         }
 
          //******------------------- Email and phone unique condition -------------------****** //
@@ -119,7 +119,7 @@ const login = async function (req, res) {
             return res.status(400).send({ Status: false, message: " email is required" })
         }
         if (!EmailRegex.test(body.email)) {
-            return res.status(400).send({ Status: false, message: " Please enter a valid email" })
+            return res.status(400).send({ Status: false, message: " Please enter a valid email, do not use @99acr only gmail/hotmail/yahoo etc" })
         }
 
         //******------------------- password validation -------------------****** //
