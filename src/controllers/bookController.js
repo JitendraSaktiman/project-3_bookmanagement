@@ -217,12 +217,17 @@ const GetBook = async function (req, res) {
 
         //**********************  If query have no combination of userid,category,subcategory ********************** //
 
-        let FindAllBook = await BookModel.find({ isDeleted: false }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).collation({locale:"en"}).sort({ title: 1 })
-        if (FindAllBook.length > 0) {
-            return res.status(200).send({ Status: true, message: 'Success', data: FindAllBook })
+        if(!query){
+            let FindAllBook = await BookModel.find({ isDeleted: false }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).collation({locale:"en"}).sort({ title: 1 })
+            if (FindAllBook.length > 0) {
+                return res.status(200).send({ Status: true, message: 'Success', data: FindAllBook })
+            }
+            else {
+                return res.status(404).send({ Status: false, message: " No data found or it can be deleted" })
+            }
         }
         else {
-            return res.status(404).send({ Status: false, message: " No data found without filter  / can be isDeleted true" })
+            return res.status(400).send({ Status: false, message: "Sorry you can not get data with another filter " })
         }
 
     }
