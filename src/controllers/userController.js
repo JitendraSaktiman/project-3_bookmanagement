@@ -55,10 +55,7 @@ const Createuser = async function (req, res) {
         }
 
         let FinalEmail= body.email
-        let changeEmail= FinalEmail.toLowerCase()
-
-        console.log("okay:    ",FinalEmail)
-        console.log("chalo:    ",changeEmail)
+        let changeEmail= FinalEmail.toLowerCase()  // changing capital word into lowercase
 
          //******------------------- Email and phone unique condition -------------------****** //
 
@@ -128,11 +125,12 @@ const login = async function (req, res) {
             return res.status(400).send({ Status: false, message: " Please enter a valid email, do not use @99acr only gmail/hotmail/yahoo etc" })
         }
         let FinalEmail= body.email
-        let changeEmail= FinalEmail.toLowerCase()
+        let changeEmail= FinalEmail.toLowerCase()  // changing capital word into lowercase
+
         //******------------------- password validation -------------------****** //
 
         if (!body.password) {
-            return res.status(401).send({ Status: false, message: " password is required" })
+            return res.status(400).send({ Status: false, message: " password is required" })
         }
         if (!Passwordregex.test(body.password)) {
             return res.status(400).send({ Status: false, message: " Please enter a valid password, minlength 8, maxxlength 15" })

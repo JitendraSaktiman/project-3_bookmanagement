@@ -125,7 +125,7 @@ const ReviewUpdate = async function (req, res) {
         if (!Checkbook) {
             return res.status(400).send({ Status: false, message: "Book does not exist / deleted book " })
         }
-        console.log("hello:   ",Checkbook)
+       
 
         let checkReview = await reviewModel.findOne({ _id: ReviewId, isDeleted: false })
 
