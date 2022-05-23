@@ -2,6 +2,8 @@ const BookModel = require("../models/bookModel")
 const userModel = require("../models/userModel")
 const reviewModel = require("../models/reviewModel")
 var moment = require('moment');
+const multer=require('multer')
+const aws= require("aws-sdk")
 
 //validator
 
@@ -21,14 +23,17 @@ const isValid = function (value) {
 // all regex validtaion
 
 let nameRegex = /^[A-Za-z]{1}[A-Za-z ,-]{1,}$/
-
-
 let titleRegex = /^[A-Za-z1-9]{1}[A-Za-z0-9 ,-?]{0,10000}$/
 
 let ISBNRegex = /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$$/
 
 let today = new Date();
 let indianTime = today.toLocaleString("en-US", 'Asia/Kolkata');
+
+//----------------------------------------------------------------------------------**//
+
+
+
 
 //----------------------------------CREATE BOOK-----------------------------***
 
@@ -37,6 +42,7 @@ const Bookcreate = async function (req, res) {
     try {
 
         let body = req.body
+        let Files= req.files
         //if req.body is empty
 
         if (Object.keys(body).length === 0) {
@@ -126,6 +132,11 @@ const Bookcreate = async function (req, res) {
         if (body.reviews > 0) {
             return res.status(400).send({ Status: false, message: " Sorry you can not create review yourself" })
         }
+
+        //***----------------------------------------------------------------------------------------------------------*******/
+      
+
+        //***----------------------------------------------------------------------------------------------------------*******/
 
         //=========================YYYY-MM-DD , we have to use validation for this=======================================//
 
